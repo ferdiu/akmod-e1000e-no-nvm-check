@@ -1,7 +1,7 @@
 %global debug_package %{nil}
 
 %define major_version 1.0
-%define release_version 1dev0
+%define release_version 1dev1
 
 Name:       akmod-e1000e-no-nvm-check
 Version:    %{major_version}
