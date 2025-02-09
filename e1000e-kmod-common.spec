@@ -2,7 +2,7 @@
 
 %define kmod_name             e1000e
 %define kmod_version          6.12
-%define kmod_release_version  1dev1
+%define kmod_release_version  1dev2
 %define kmod_path_kernel      drivers/net/ethernet/intel/e1000e
 
 Name:           %{kmod_name}-kmod-common
@@ -15,7 +15,7 @@ Group:          System Environment/Kernel
 
 License:        MIT
 URL:            https://github.com/ferdiu/akmod-e1000e-no-nvm-check
-Source0:        %{url}/archive/refs/tags/v%{version}-%{kmod_release_version}.tar.gz
+Source0:        %{url}/archive/refs/tags/v%{version}-%{kmod_release_version}.tar.gz#/akmod-e1000e-no-nvm-check-v%{version}.tar.gz
 BuildArch:	    noarch
 
 %description
@@ -29,7 +29,7 @@ working is the NVM checksum validation.
 This package provides common files for the module.
 
 %prep
-%setup -q -n akmod-e1000e-no-nvm-check-%{major_version}-%{release_version}
+%setup -q -n akmod-e1000e-no-nvm-check-%{version}-%{kmod_release_version}
 
 %files
 %doc README.md
