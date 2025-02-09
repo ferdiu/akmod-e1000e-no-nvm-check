@@ -6,7 +6,7 @@
 
 %define kmod_name             e1000e
 %define kmod_version          6.12
-%define kmod_release_version  1
+%define kmod_release_version  1dev1
 %define kmod_path_kernel      drivers/net/ethernet/intel/e1000e
 
 Name:           %{kmod_name}-kmod
