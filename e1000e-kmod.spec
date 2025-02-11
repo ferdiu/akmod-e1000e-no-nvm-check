@@ -12,11 +12,12 @@
 
 Name:           %{kmod_name}-kmod
 Version:        %{kmod_version}
-Release:        %{kmod_release_version}%{?dist}.1
+Release:        %{kmod_release_version}%{?dist}
 Summary:        Kernel module e1000e with no NVM check
 Group:          System Environment/Kernel
 License:        GPLv2
 URL:            https://github.com/ferdiu/akmod-e1000e-no-nvm-check
+Source0:        %{url}/archive/refs/tags/v%{version}-%{kmod_release_version}.tar.gz#/akmod-e1000e-no-nvm-check-v%{version}.tar.gz
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildRequires:  kernel-devel
