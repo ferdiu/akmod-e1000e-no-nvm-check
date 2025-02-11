@@ -1,8 +1,8 @@
 # (un)define the next line to either build for the newest or all current kernels
 
 %define kmod_name             e1000e
-%define kmod_version          6.12
-%define kmod_release_version  1dev2
+%define kmod_version          1.0
+%define kmod_release_version  1
 %define kmod_path_kernel      drivers/net/ethernet/intel/e1000e
 
 Name:           %{kmod_name}-kmod-common
@@ -36,5 +36,5 @@ This package provides common files for the module.
 %license LICENSE
 
 %changelog
-* Sun Feb 9 2025 Federico Manzella <ferdiu.manzella@gmail.com> - 6.12-1
+* Tue Feb 11 2025 Federico Manzella <ferdiu.manzella@gmail.com> - 1.0-1
 - Initial release
