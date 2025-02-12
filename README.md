@@ -83,9 +83,11 @@ sudo modprobe e1000e
 
 ## License
 
-This project is licensed under the MIT License.
+This project is licensed under the MIT License but the module it-self is licensed under the **GPLv2** license.
+
+## Maintainer
+- [**Federico Manzella**](https://github.com/ferdiu)
 
 ## Changelog
-
-* **Sun Feb 9 2025** Federico Manzella <ferdiu.manzella@gmail.com> - 6.12-1
-  - Initial release
+### v1.0 (Feb 11, 2025)
+- Initial release
