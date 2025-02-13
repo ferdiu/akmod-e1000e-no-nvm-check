@@ -7,7 +7,7 @@
 %define kmod_name             e1000e
 %define kmod_path_kernel      drivers/net/ethernet/intel/%{kmod_name}
 %define kmod_version          1.0
-%define kmod_release_version  1
+%define kmod_release_version  2
 %define repo                  rpmfusion
 
 Name:           %{kmod_name}-kmod
@@ -134,5 +134,8 @@ done
 
 
 %changelog
+* Thu Feb 13 2025 Federico Manzella <ferdiu.manzella@gmail.com> - 1.0-2
+- Add autmoatic agree with default new configs during prepare step
+
 * Tue Feb 11 2025 Federico Manzella <ferdiu.manzella@gmail.com> - 1.0-1
 - Initial release
