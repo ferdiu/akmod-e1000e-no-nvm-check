@@ -7,7 +7,7 @@
 %define kmod_name             e1000e
 %define kmod_path_kernel      drivers/net/ethernet/intel/%{kmod_name}
 %define kmod_version          1.0
-%define kmod_release_version  2
+%define kmod_release_version  3
 %define repo                  rpmfusion
 
 Name:           %{kmod_name}-kmod
@@ -22,6 +22,7 @@ BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildRequires:  kernel-devel
 BuildRequires:  koji
+BuildRequires:  rustfmt
 BuildRequires:  %{_bindir}/kmodtool
 
 %{!?kernels:BuildRequires: buildsys-build-rpmfusion-kerneldevpkgs-%{?buildforkernels:%{buildforkernels}}%{!?buildforkernels:current}-%{_target_cpu} }
@@ -134,6 +135,9 @@ done
 
 
 %changelog
+* Wed Apr 2 2025 Federico Manzella <ferdiu.manzella@gmail.com> - 1.0-3
+- Add rustfmt in e1000e-kmod build requires
+
 * Thu Feb 13 2025 Federico Manzella <ferdiu.manzella@gmail.com> - 1.0-2
 - Add autmoatic agree with default new configs during prepare step
 
