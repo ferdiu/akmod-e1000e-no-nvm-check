@@ -7,7 +7,7 @@
 %define kmod_name             e1000e
 %define kmod_path_kernel      drivers/net/ethernet/intel/%{kmod_name}
 %define kmod_version          1.0
-%define kmod_release_version  3
+%define kmod_release_version  4
 %define repo                  rpmfusion
 
 Name:           %{kmod_name}-kmod
@@ -20,12 +20,17 @@ URL:            https://github.com/ferdiu/akmod-e1000e-no-nvm-check
 Source0:        %{url}/archive/refs/tags/v%{version}-%{kmod_release_version}.tar.gz#/akmod-e1000e-no-nvm-check-v%{version}.tar.gz
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
-BuildRequires:  kernel-devel
-BuildRequires:  koji
-BuildRequires:  rustfmt
-BuildRequires:  %{_bindir}/kmodtool
+# Standard kmod build requirements
+%global AkmodsBuildRequires %{_bindir}/kmodtool
+BuildRequires:  %{AkmodsBuildRequires}
 
-%{!?kernels:BuildRequires: buildsys-build-rpmfusion-kerneldevpkgs-%{?buildforkernels:%{buildforkernels}}%{!?buildforkernels:current}-%{_target_cpu} }
+# Kernel build dependencies - needed for building kernel modules
+%{!?kernels:BuildRequires: gcc, elfutils-libelf-devel, buildsys-build-rpmfusion-kerneldevpkgs-%{?buildforkernels:%{buildforkernels}}%{!?buildforkernels:current}-%{_target_cpu} }
+
+# Additional tools needed for koji-based kernel source download approach
+BuildRequires:  koji
+BuildRequires:  rpm-build
+BuildRequires:  rustfmt
 
 # kmodtool does its magic here
 %{expand:%(kmodtool --target %{_target_cpu} --repo %{repo} --kmodname %{name} %{?buildforkernels:--%{buildforkernels}} %{?kernels:--for-kernels "%{?kernels}"} 2>/dev/null | sed 's|extra|updates|g' | sed 's|%{kmod_name}/||g') }
@@ -67,8 +72,6 @@ for kernel_version in %{?kernel_versions} ; do
     # Download kernel source
     koji download-build --arch=src "kernel-${kernel_v}"
 
-    ls
-
     # Unpack source and kernel.spec file
     rpm \
         --define "_sourcedir ${PWD}" \
@@ -79,17 +82,16 @@ for kernel_version in %{?kernel_versions} ; do
         --define "_buildrootdir ${PWD}/.build" \
         -Uvh kernel-${kernel_v_no_arch}.src.rpm
 
-    ls
-
     # Unpack source and apply (original) patches
-    rpmbuild \
+    # --nodeps here allows to skip build dependency checks (not all kernel build dependencies are needed)
+    rpmbuild --nodeps \
         --define "_sourcedir ${PWD}" \
         --define "_specdir ${PWD}" \
         --define "_builddir ${PWD}" \
         --define "_srcrpmdir ${PWD}" \
         --define "_rpmdir ${PWD}" \
         --define "_buildrootdir ${PWD}/.build" \
-        -bp --target="$(uname -m)" kernel.spec
+        -bp --target="$(uname -m)" kernel.spec 2>&1 || true # Even if it fail we are ok!
 
     if [ %{fedora} -gt 40 ]; then
         build_dir="./kernel-${kernel_v_no_extra}-build/kernel-${kernel_v_no_extra}/linux-${kernel_v}"
@@ -135,6 +137,9 @@ done
 
 
 %changelog
+* Thu Jan 15 2025 Federico Manzella <ferdiu.manzella@gmail.com> - 1.0-4
+- Fix missing kernel build dependencies in BuildRequires
+
 * Wed Apr 2 2025 Federico Manzella <ferdiu.manzella@gmail.com> - 1.0-3
 - Add rustfmt in e1000e-kmod build requires
 
