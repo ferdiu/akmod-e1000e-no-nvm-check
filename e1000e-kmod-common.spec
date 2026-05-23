@@ -2,7 +2,7 @@
 
 %define kmod_name             e1000e
 %define kmod_version          1.0
-%define kmod_release_version  2
+%define kmod_release_version  4
 %define kmod_path_kernel      drivers/net/ethernet/intel/e1000e
 
 Name:           %{kmod_name}-kmod-common
@@ -36,6 +36,9 @@ This package provides common files for the module.
 %license LICENSE
 
 %changelog
+* Sat May 23 2026 Federico Manzella <ferdiu.manzella@gmail.com> - 1.0-4
+- Match release version with kmod
+
 * Thu Feb 13 2025 Federico Manzella <ferdiu.manzella@gmail.com> - 1.0-2
 - Add autmoatic agree with default new configs during prepare step
 
